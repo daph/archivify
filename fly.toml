@@ -1,0 +1,14 @@
+# fly.toml app configuration file generated for archivify on 2025-01-14T13:09:47+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'archivify'
+primary_region = 'iad'
+
+[build]
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
