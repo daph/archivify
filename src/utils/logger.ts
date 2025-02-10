@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { pino } from 'pino';
 
 const LEVEL = process.env.LOG_LEVEL ?? "error";

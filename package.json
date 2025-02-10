@@ -1,40 +1,28 @@
 {
   "name": "archivify",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/app.js",
+  "version": "1.0.1",
+  "module": "src/app.ts",
+  "main": "src/app.ts",
   "type": "module",
   "scripts": {
-    "build": "npx --package=typescript tsc -sourcemap -p .",
-    "start": "node -r source-map-support/register .",
-    "deploy-commands": "pnpm run build && node dist/deploy-commands.js",
-    "lint": "npx eslint ."
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@extractus/article-extractor": "^8.0.16",
-    "cheerio": "^1.0.0",
-    "discord.js": "^14.16.3",
-    "dotenv": "^16.4.7",
-    "pino": "^9.6.0",
-    "source-map-support": "^0.5.21"
+    "check": "bunx tsc -p .",
+    "start": "bun run check && bun src/app.ts",
+    "deploy-commands": "bun src/deploy-commands.ts"
   },
   "overrides": {
     "whatwg-url": "^14.1.0"
   },
-  "pnpm": {
-    "overrides": {
-      "whatwg-url": "^14.1.0"
-    }
-  },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@flydotio/dockerfile": "^0.7.0",
-    "eslint": "^9.17.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.1"
+    "@flydotio/dockerfile": "^0.7.4",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@extractus/article-extractor": "^8.0.16",
+    "cheerio": "^1.0.0",
+    "discord.js": "^14.17.3",
+    "pino": "^9.6.0"
   }
 }

@@ -1,5 +1,5 @@
-import { Collection, Events, Interaction, MessageFlags } from "discord.js";
-import { logger } from "../utils/logger.js";
+import { Collection, Events, MessageFlags, type Interaction } from "discord.js";
+import { logger } from "../utils/logger.ts";
 
 export const name = Events.InteractionCreate;
 export const once = false;

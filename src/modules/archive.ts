@@ -1,10 +1,8 @@
-import 'dotenv/config';
-import http2 from "http2";
+import http2 from "node:http2";
 import * as cheerio from "cheerio";
 
 const ARCHIVE = process.env.ARCHIVE_ENDPOINT ?? "https://archive.today/";
 const USER_AGENT = process.env.USER_AGENT ?? "archivify (https://github.com/daph/archivify/)";
-
 async function wait(time: number = 10000): Promise<void> {
     return new Promise((resolve) => {
         setTimeout(() => resolve(), time);
@@ -22,17 +20,13 @@ async function http2Req(url: URL, session: http2.ClientHttp2Session): Promise<{
         let data: string = "";
         const req = session.request({
             ":path": url.pathname + url.search,
-            "host": url.host,
             // add some proper headers
-            "pragma": "no-cache",
-            "cache-control": "no-cache",
-            "priority": "u=0, i",
-            "accept": "text/html",
-            "referer": url.pathname + "?url=" + url.href,
-            "accept-language": "en-US",
-            "user-agent": USER_AGENT
+            [http2.constants.HTTP2_HEADER_CACHE_CONTROL]: "no-cache",
+            [http2.constants.HTTP2_HEADER_ACCEPT]: "text/html",
+            [http2.constants.HTTP2_HEADER_REFERER]: url.pathname + "?url=" + url.href,
+            [http2.constants.HTTP2_HEADER_ACCEPT_LANGUAGE]: "en-US",
+            [http2.constants.HTTP2_HEADER_USER_AGENT]: USER_AGENT
         });
-
         req.setEncoding("utf8");
         req.on("error", err => reject(err));
         req.on("response", h => headers = h);
@@ -132,12 +126,13 @@ async function makeArchive(url: URL): Promise<string> {
 export async function archive(url: URL): Promise<string> {
     const archiveUrl = new URL(ARCHIVE);
     archiveUrl.pathname = "/newest/" + url.origin + url.pathname
-    const { headers } = await http2Get(archiveUrl)
+    const { headers, data } = await http2Get(archiveUrl)
     const { ":status": status } = headers;
     if (status === 302 && headers.location) { // already archived so return archived url
         return headers.location;
     } else if (status === 404) { // not yet archived, so archive it
         return await makeArchive(url);
+    } else { // archive thinks we're a bot >_>
+        throw new Error(`Unhandled status: ${status} from archive. Data: ${data}`);
     }
-    return `${status}`;
 }

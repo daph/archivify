@@ -1,5 +1,4 @@
-import 'dotenv/config';
-import { logger } from './utils/logger.js';
+import { logger } from './utils/logger.ts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -17,7 +16,7 @@ client.commands = new Collection();
 client.cooldowns = new Collection();
 
 const commandsPath = path.join(__dirname, "commands");
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = await import(filePath);
@@ -30,7 +29,7 @@ for (const file of commandFiles) {
 }
 
 const eventsPath = path.join(__dirname, "events");
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith(".js"));
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith(".ts"));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);

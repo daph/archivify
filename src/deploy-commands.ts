@@ -1,9 +1,8 @@
-import 'dotenv/config'
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { REST, Routes } from "discord.js";
-import { ArchivifyCommand } from './@types/archivifyCommand.js';
+import { type ArchivifyCommand } from './@types/archivifyCommand.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +23,7 @@ if (!appId) {
 const commands: Array<ArchivifyCommand> = [];
 
 const commandsPath = path.join(__dirname, "commands");
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = await import(filePath);

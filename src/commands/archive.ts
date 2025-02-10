@@ -1,5 +1,5 @@
-import { archive } from "../modules/archive.js";
-import { logger } from "../utils/logger.js";
+import { archive } from "../modules/archive.ts";
+import { logger } from "../utils/logger.ts";
 import { extract } from "@extractus/article-extractor";
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
