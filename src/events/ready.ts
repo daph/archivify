@@ -1,10 +1,9 @@
 import { Client, Events } from "discord.js";
 import { logger } from "../utils/logger.ts";
 
-export const name = Events.ClientReady;
-export const once = true;
+// Only run once, on ready
 
-export function execute(client: Client) {
+export function readyEvent(client: Client) {
     if (!client.user) {
         logger.error("Client ready called but user is null");
         return;

@@ -1,10 +1,9 @@
 import { Collection, Events, MessageFlags, type Interaction } from "discord.js";
 import { logger } from "../utils/logger.ts";
 
-export const name = Events.InteractionCreate;
-export const once = false;
+// Run on every interaction
 
-export async function execute(interaction: Interaction) {
+export async function interactionCreateEvent(interaction: Interaction) {
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);

@@ -4,9 +4,9 @@ import { extract } from "@extractus/article-extractor";
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from "discord.js";
 
 
-export const cooldown = 5;
+const cooldown = 5;
 
-export const data = new SlashCommandBuilder()
+const data = new SlashCommandBuilder()
     .setName("archive")
     .setDescription("Archives a url with archive.today")
     .addStringOption(option =>
@@ -15,7 +15,7 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export async function execute(interaction: ChatInputCommandInteraction) {
+async function execute(interaction: ChatInputCommandInteraction) {
     const url_option = interaction.options.getString("url");
     if (!url_option) return await interaction.reply("No url provided");
     const msgFooter = `Archived link requested by <@${interaction.user.id}>`
@@ -39,3 +39,9 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         return await interaction.followUp(`There was an error archiving ${url_option}\n${msgFooter}`);
     }
 }
+
+export const archivifyCommand = {
+    cooldown,
+    data,
+    execute
+};

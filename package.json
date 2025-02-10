@@ -1,12 +1,13 @@
 {
   "name": "archivify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "module": "src/app.ts",
   "main": "src/app.ts",
   "type": "module",
   "scripts": {
     "check": "bunx tsc -p .",
     "start": "bun run check && bun src/app.ts",
+    "build": "bun run check && bun build --compile --bytecode --sourcemap src/app.ts --outfile archivify.out",
     "deploy-commands": "bun src/deploy-commands.ts"
   },
   "overrides": {

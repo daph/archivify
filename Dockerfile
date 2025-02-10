@@ -23,16 +23,17 @@ RUN apt-get update -qq && \
 # Install node modules
 COPY bun.lock package.json ./
 RUN bun install --ci
-
 # Copy application code
 COPY . .
+# make executable
+RUN bun run build
 
 
 # Final stage for app image
 FROM base
 
 # Copy built application
-COPY --from=build /app /app
+COPY --from=build /app/archivify.out /app
 
 # Start the server by default, this can be overwritten at runtime
-CMD [ "bun", "run", "start" ]
+CMD [ "./archivify.out" ]
