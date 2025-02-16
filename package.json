@@ -14,16 +14,16 @@
     "whatwg-url": "^14.1.0"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.7.4",
+    "@flydotio/dockerfile": "^0.7.8",
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@extractus/article-extractor": "^8.0.16",
+    "@extractus/article-extractor": "^8.0.17",
     "cheerio": "^1.0.0",
-    "discord.js": "^14.17.3",
+    "discord.js": "^14.18.0",
     "pino": "^9.6.0"
   }
 }

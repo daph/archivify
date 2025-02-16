@@ -25,14 +25,16 @@ async function execute(interaction: ChatInputCommandInteraction) {
             flags: MessageFlags.Ephemeral
         });
         const urlObj = new URL(url_option);
-        const extracted = await extract(url_option)
         const doneUrl = await archive(urlObj);
-        if (extracted) {
+        try {
+            const extracted = await extract(url_option)
             await interaction.followUp(
-                `<${doneUrl}>\n> **${extracted.title}**\n\n> ${extracted.description}\n${msgFooter}`
+                `<${doneUrl}>\n> **${extracted!.title}**\n\n> ${extracted!.description}\n${msgFooter}`
             );
-        } else {
-            await interaction.followUp(`${doneUrl}\n${msgFooter}`);
+        }
+        catch (err) {
+            logger.error(`Failed to extract info from url ${urlObj.href}. Error: ${err}`);
+            await interaction.followUp(`Couldn't get header/summary, but archived the url:\n${doneUrl}\n${msgFooter}`);
         }
     } catch (err) {
         logger.error(err);
